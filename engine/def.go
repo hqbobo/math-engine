@@ -20,30 +20,34 @@ var TrigonometricMode = RadianMode
 
 var defConst = map[string]float64{
 	"pi": math.Pi,
+	"e":  math.E,
 }
 
 var defFunc map[string]defS
 
 func init() {
 	defFunc = map[string]defS{
-		"sin": {1, defSin},
-		"cos": {1, defCos},
-		"tan": {1, defTan},
-		"cot": {1, defCot},
-		"sec": {1, defSec},
-		"csc": {1, defCsc},
-
-		"abs":   {1, defAbs},
-		"ceil":  {1, defCeil},
-		"floor": {1, defFloor},
-		"round": {1, defRound},
-		"sqrt":  {1, defSqrt},
-		"cbrt":  {1, defCbrt},
-
-		"noerr": {1, defNoerr},
-
-		"max": {-1, defMax},
-		"min": {-1, defMin},
+		"sin":    {1, defSin},
+		"cos":    {1, defCos},
+		"tan":    {1, defTan},
+		"cot":    {1, defCot},
+		"sec":    {1, defSec},
+		"csc":    {1, defCsc},
+		"abs":    {1, defAbs},
+		"ceil":   {1, defCeil},
+		"floor":  {1, defFloor},
+		"round":  {1, defRound},
+		"sqrt":   {1, defSqrt},
+		"cbrt":   {1, defCbrt},
+		"noerr":  {1, defNoerr},
+		"max":    {-1, defMax},
+		"min":    {-1, defMin},
+		"log":    {1, defLog},
+		"log2":   {1, defLog2},
+		"log10":  {1, defLog10},
+		"avg":    {-1, defAvg},
+		"bessel": {2, defBessel},
+		"exp":    {1, defExp},
 	}
 }
 
@@ -155,4 +159,37 @@ func defNoerr(expr ...ExprAST) (r float64) {
 		}
 	}()
 	return ExprASTResult(expr[0])
+}
+
+// cbrt(27) = 3
+func defLog(expr ...ExprAST) float64 {
+	return math.Log(ExprASTResult(expr[0]))
+}
+
+func defLog2(expr ...ExprAST) float64 {
+	return math.Log2(ExprASTResult(expr[0]))
+}
+
+func defLog10(expr ...ExprAST) float64 {
+	return math.Log10(ExprASTResult(expr[0]))
+}
+
+func defExp(expr ...ExprAST) float64 {
+	return math.Exp(ExprASTResult(expr[0]))
+}
+
+func defAvg(expr ...ExprAST) float64 {
+	if len(expr) <= 1 {
+		panic(errors.New("calling function `avg` must have at least two parameter."))
+	}
+
+	var total float64
+	for i := 0; i < len(expr); i++ {
+		total += ExprASTResult(expr[i])
+	}
+	return total / float64(len(expr))
+}
+
+func defBessel(expr ...ExprAST) float64 {
+	return math.Jn(int(ExprASTResult(expr[0])), ExprASTResult(expr[1]))
 }

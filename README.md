@@ -1,10 +1,10 @@
 ## Math-Engine  
 
-[![Build Status](https://travis-ci.org/dengsgo/math-engine.svg?branch=master)](https://travis-ci.org/dengsgo/math-engine)  [![Go Report Card](https://goreportcard.com/badge/github.com/dengsgo/math-engine)](https://goreportcard.com/report/github.com/dengsgo/math-engine)  [![godoc.org](https://godoc.org/github.com/dengsgo/math-engine/engine?status.svg)](https://godoc.org/github.com/dengsgo/math-engine/engine)  
+[![Build Status](https://travis-ci.org/hqbobo/math-engine.svg?branch=master)](https://travis-ci.org/hqbobo/math-engine)  [![Go Report Card](https://goreportcard.com/badge/github.com/hqbobo/math-engine)](https://goreportcard.com/report/github.com/hqbobo/math-engine)  [![godoc.org](https://godoc.org/github.com/hqbobo/math-engine/engine?status.svg)](https://godoc.org/github.com/hqbobo/math-engine/engine)  
 
 使用 Go 实现的数学表达式解析计算引擎库，它小巧，无任何依赖，具有扩展性(比如可以注册自己的函数到引擎中)，比较完整的完成了数学表达式解析执行，包括词法分析、语法分析、构建AST、运行。  
 
-`go get -u github.com/dengsgo/math-engine`  
+`go get -u github.com/hqbobo/math-engine`  
 
 能够处理的表达式样例：  
 - `1+127-21+(3-4)*6/2.5`  
@@ -22,9 +22,9 @@
 
 ## Method Support
 
-| symbol      | explanation                  | e.g.                                  |
-| ----------- | ---------------------------- | ------------------------------------- |
-| `+`         | 加，plus                     | 1+2 = 3                               |
+| symbol       | explanation                  | e.g.                                  |
+| -----------  | ---------------------------- | ------------------------------------- |
+| `+`          | 加，plus                     | 1+2 = 3                               |
 | `-`         | 减，sub                      | 8-3.5 = 4.5                           |
 | `*`         | 乘，multiply                 | 2*3 = 6                               |
 | `/`         | 除，division                 | 5/2 = 2.5                             |
@@ -50,22 +50,27 @@
 | `min(x, ...)` | 参数中的较小值              | min(1)=1,min(2,3)=2,max(4,8,6,8,10)=4 |
 | `noerr(x)`  | 计算 x 出错时返回 0          | noerr(1 / 1)  = 1, noerr( 1/ 0 ) = 0  |
 | `double(x)`  | 返回 x 的双倍值，这是一个自定义的函数示例，你可以注册任意的自定义函数到引擎中  | double(6) = 12  |
+| `avg(x, ...)` | 平均值计算              | avg(1)=1,avg(2,3)=2.5,avg(4,6,8,10)=7 |
+| `bessel(n, x)`  | order-n 贝塞尔 first kind             | bessel(1,2) = 0.5767248077568733 |
+| `log(x)`   | log            | log(27) = 3.295836866004329                          |
+| `log2(x)`   | log2            | log2(27) = 4.754887502163468                         |
+| `log10(x)`   | log10            | log10(27) = 1.4313637641589874                        |
 
 
 ## Usage  
 
 你可以直接引用该库嵌入到自己的程序中：  
 ```bash
-go get -u github.com/dengsgo/math-engine
+go get -u github.com/hqbobo/math-engine
 ```
 在代码中引入：  
 ```go
-import "github.com/dengsgo/math-engine/engine"
+import "github.com/hqbobo/math-engine/engine"
 ```
 e.g. 1 常规用法： 直接调用解析执行函数 :
 
 ```go
-import "github.com/dengsgo/math-engine/engine"
+import "github.com/hqbobo/math-engine/engine"
 
 func main() {
   s := "1 + 2 * 6 / 4 + (456 - 8 * 9.2) - (2 + 4 ^ 5)"
@@ -83,7 +88,7 @@ func main() {
 e.g. 2 高级用法： 依次调用函数，手动执行 :  
 
 ```go
-import "github.com/dengsgo/math-engine/engine"
+import "github.com/hqbobo/math-engine/engine"
 
 func main() {
 	s := "1 + 2 * 6 / 4 + (456 - 8 * 9.2) - (2 + 4 ^ 5)"
@@ -132,7 +137,7 @@ progressing ...  -639.6
 你可以通过设置 `TrigonometricMode` 调整参数类型，可选 弧度`RadianMode`、角度`AngleMode`，e.g. :
 
 ```go
-import "github.com/dengsgo/math-engine/engine"
+import "github.com/hqbobo/math-engine/engine"
 
 func main() {
   s := "1 + sin(90)"
@@ -193,7 +198,7 @@ go build
 
 也可以直接下载已编译好的二进制文件，直接运行：  
 
-[Github Releases](https://github.com/dengsgo/math-engine/releases)  
+[Github Releases](https://github.com/hqbobo/math-engine/releases)  
 
 ## 实现细节    
 
